@@ -1,0 +1,15 @@
+{
+    "name": "Spicetify-tui",
+    "description": "Terminal-style Spicetify theme inspired by spotify-tui — panel labels, ASCII banner, text-glyph playback controls. TokyoNight by default, multiple palettes included.",
+    "preview": "preview-home.png",
+    "readme": "README.md",
+    "usercss": "user.css",
+    "schemes": "color.ini",
+    "authors": [
+        {
+            "name": "NephVx2",
+            "url": "https://github.com/NephVx2"
+        }
+    ],
+    "tags": ["terminal", "tokyonight", "catppuccin"]
+}
