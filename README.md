@@ -48,4 +48,4 @@ spicetify apply
 
 ## License
 
-Add the license of your choice here (e.g. MIT) — note that the base theme itself is licensed, so check the `spicetify-themes` repo's license before publishing.
+[MIT](LICENSE) — same license as the base `text` theme from [spicetify/spicetify-themes](https://github.com/spicetify/spicetify-themes), which this theme is derived from.
