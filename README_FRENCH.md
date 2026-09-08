@@ -9,7 +9,6 @@ Basé à l'origine sur le thème communautaire [`text`](https://github.com/spice
 ## Aperçu
 
 ![Vue d'accueil](preview-home.png)
-![Barre de lecture](preview-playing.png)
 
 ## Prérequis
 
