@@ -9,6 +9,7 @@ Basé à l'origine sur le thème communautaire [`text`](https://github.com/spice
 ## Aperçu
 
 ![Vue d'accueil](preview-home.png)
+![Vue playlist épurée — sans pochettes, liste texte façon terminal](preview-playlist.png)
 
 ## Prérequis
 
