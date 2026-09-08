@@ -9,6 +9,7 @@ Originally based on the community [`text`](https://github.com/spicetify/spicetif
 ## Preview
 
 ![Home view](preview-home.png)
+![Clean playlist view — no album art, terminal-style text list](preview-playlist.png)
 
 ## Requirements
 
