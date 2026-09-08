@@ -9,7 +9,6 @@ Originally based on the community [`text`](https://github.com/spicetify/spicetif
 ## Preview
 
 ![Home view](preview-home.png)
-![Playing bar](preview-playing.png)
 
 ## Requirements
 
