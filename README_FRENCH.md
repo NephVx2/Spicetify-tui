@@ -1,8 +1,8 @@
 # Spicetify-tui
 
-Un thème Spicetify inspiré de [spotify-tui](https://github.com/Rigellute/spotify-tui), façon interface terminal : bordures, labels de panneaux ("Nav", "Library", "Main", "Sidebar", "Playing"), police monospace Nerd Font, bannière ASCII sur l'accueil, contrôles de lecture en glyphes texte.
+Un thème Spicetify inspiré de [spotify-tui](https://github.com/Rigellute/spotify-tui), façon interface terminal : bordures, labels de panneaux ("Nav", "Library", "Main", "Sidebar", "Playing"), police monospace Nerd Font, bannière ASCII sur l'accueil, contrôles de lecture en glyphes texte. Le cadre de la fenêtre lui-même est retravaillé : bordures amincies et suppression des boutons réduire/agrandir/fermer, pour un rendu épuré et sans bordure qui s'accorde bien avec les gestionnaires de fenêtres en tiling comme [komorebi](https://github.com/LGUG2Z/komorebi).
 
-Basé à l'origine sur le thème communautaire [`text`](https://github.com/spicetify/spicetify-themes/tree/main/text) du dépôt officiel `spicetify-themes`, largement retravaillé (barre de progression, barre de volume, mise en page, correctifs de compatibilité avec les mises à jour récentes de Spotify).
+Basé à l'origine sur le thème communautaire [`text`](https://github.com/spicetify/spicetify-themes/tree/main/text) du dépôt officiel `spicetify-themes`, largement retravaillé (barre de progression, barre de volume, mise en page, cadre de fenêtre, correctifs de compatibilité avec les mises à jour récentes de Spotify).
 
 *(Read this in [English](README.md))*
 
@@ -31,6 +31,14 @@ Basé à l'origine sur le thème communautaire [`text`](https://github.com/spice
    spicetify apply
    ```
 5. Installe la police 0xProto Nerd Font Mono (lien ci-dessus) si ce n'est pas déjà fait, puis relance `spicetify apply`.
+
+## À propos du cadre de fenêtre
+
+Ce thème supprime les boutons natifs réduire/agrandir/fermer et amincit les bordures de la fenêtre, pour coller au rendu sans bordure typique des gestionnaires de fenêtres en tiling. Quelques conséquences pratiques à garder en tête :
+
+- **Fermer/réduire l'appli** dépend désormais entièrement des raccourcis clavier de ton gestionnaire de fenêtres (ou de l'icône dans la barre des tâches/system tray) — il n'y a plus de bouton à cliquer.
+- Si tu **n'utilises pas** de WM en tiling (komorebi, GlazeWM, i3, etc.), teste d'abord sur une machine où tu peux encore accéder à l'appli autrement avant de l'adopter au quotidien — Alt+F4 fonctionne toujours, mais on peut vite se sentir "coincé" la première fois.
+- Envie de récupérer les boutons natifs sans renoncer au reste du thème ? Commente (ou supprime) le bloc de règles correspondant en haut de `user.css` — il est isolé du reste du style.
 
 ## Palettes disponibles
 
