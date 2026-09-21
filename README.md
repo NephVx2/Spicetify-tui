@@ -9,6 +9,23 @@ Originally based on the community [`text`](https://github.com/spicetify/spicetif
 
 > Developed and tested on Windows 11 with Spotify 1.3.1 and Spicetify 2.45.1. Spotify updates regularly rename its internal CSS classes, so if something looks off after an update, see [After a Spotify update](#after-a-spotify-update).
 
+## Table of contents
+
+- [Preview](#preview)
+- [Requirements](#requirements)
+- [What's in this repo](#whats-in-this-repo)
+- [Installation](#installation)
+- [The `noControls.js` extension](#the-nocontrolsjs-extension)
+- [About the window frame](#about-the-window-frame)
+  - [Getting the native buttons back](#getting-the-native-buttons-back)
+- [After a Spotify update](#after-a-spotify-update)
+- [Changing the palette or theme](#changing-the-palette-or-theme)
+  - [Switch to another palette](#switch-to-another-palette)
+  - [Create your own palette](#create-your-own-palette)
+  - [Use a different theme (not TUI)](#use-a-different-theme-not-tui)
+- [Credits](#credits)
+- [License](#license)
+
 ## Preview
 
 ![Home view](preview-home.png)
