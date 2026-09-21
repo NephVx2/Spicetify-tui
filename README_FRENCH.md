@@ -50,6 +50,8 @@ Ces deux dossiers se trouvent dans ton répertoire de configuration Spicetify : 
    spicetify config extensions noControls.js
    ```
    `spicetify config extensions noControls.js` ajoute l'extension à ta liste, elle ne remplace pas les extensions que tu utilises déjà.
+
+   Envie d'une autre palette que `TokyoNight` ? Voir [Changer de palette ou de thème](#changer-de-palette-ou-de-thème).
 5. Applique :
    ```
    spicetify apply
@@ -99,13 +101,65 @@ Une mise à jour de Spotify peut écraser les modifications de Spicetify ou reno
 
 Si autre chose ne fonctionne plus, ouvre une issue avec une capture d'écran et tes versions de Spotify et Spicetify (`spicetify -v`).
 
-## Palettes disponibles
+## Changer de palette ou de thème
 
-Le fichier `color.ini` inclut plusieurs palettes (TokyoNight, TokyoNightStorm, Catppuccin, Dracula, Gruvbox, Nord, Rosé Pine, Solarized, Everforest, etc.). Change de palette avec :
+Toutes les couleurs sont dans `color.ini`, une palette par `[Section]`. La valeur donnée à `color_scheme` doit correspondre **exactement** au nom d'une section : même casse, sans espace ni accent (`RosePine`, pas `Rosé Pine` ; `CatppuccinMocha`, pas `Catppuccin`).
+
+### Passer à une autre palette
+
+1. Choisis un nom dans la liste ci-dessous, ou affiche-les directement depuis ton installation :
+   ```powershell
+   Select-String -Path "$(spicetify -c | Split-Path)\Themes\TUI\color.ini" -Pattern '^\[(.+)\]' | ForEach-Object { $_.Matches[0].Groups[1].Value }
+   ```
+2. Définis-la et applique (exemple avec Dracula) :
+   ```
+   spicetify config color_scheme Dracula
+   spicetify apply
+   ```
+3. Vérifie avec `spicetify config` que `current_theme` vaut `TUI`, que `color_scheme` correspond à la palette choisie, et que `inject_css` et `replace_colors` valent tous les deux `1`.
+
+Palettes disponibles : `TokyoNight` (celle du guide), `TokyoNightStorm`, `CatppuccinMocha`, `CatppuccinMacchiato`, `CatppuccinLatte`, `Dracula`, `Gruvbox`, `Kanagawa`, `Nord`, `Rigel`, `RosePine`, `RosePineMoon`, `RosePineDawn`, `Solarized`, `EverforestDarkMedium`, `ForestGreen`, `Spotify`, `Spicetify`.
+
+**Rien ne change après `spicetify apply` ?**
+
+- Le nom ne correspond pas exactement à une section de `color.ini` (voir la remarque ci-dessus).
+- `replace_colors` est à `0` : lance `spicetify config replace_colors 1 inject_css 1`, puis `spicetify apply`.
+- Tu as modifié `color.ini` dans une copie téléchargée du dépôt et non dans celle que lit Spicetify : il doit se trouver dans `%appdata%\spicetify\Themes\TUI\` (`spicetify -c | Split-Path` affiche le dossier de configuration).
+- Spotify ne s'est pas rechargé : ferme-le complètement (zone de notification comprise), rouvre-le, ou relance `spicetify apply`.
+
+### Créer ta propre palette
+
+Copie un bloc existant de `color.ini`, renomme la `[Section]` et change les valeurs (couleurs hexadécimales, **sans** le `#`) :
+
+```ini
+[MaPalette]
+accent             = ff79c6
+accent-active      = ff79c6
+accent-inactive    = 1e1e2e
+banner             = ff79c6
+border-active      = ff79c6
+border-inactive    = 313244
+header             = 585b70
+highlight          = 585b70
+main               = 1e1e2e
+notification       = 89b4fa
+notification-error = f38ba8
+subtext            = a6adc8
+text               = cdd6f4
 ```
-spicetify config color_scheme <NomDeLaPalette>
+
+Puis `spicetify config color_scheme MaPalette` et `spicetify apply`. Les 13 clés doivent toutes être présentes. En gros : `main` est le fond, `text`/`subtext` les couleurs de texte, et `accent` la couleur d'accentuation.
+
+### Utiliser un autre thème (que TUI)
+
+```
+spicetify config current_theme <NomDuDossierDuThème>
+spicetify config color_scheme <une palette du color.ini de ce thème>
+spicetify config extensions noControls.js-
 spicetify apply
 ```
+
+La troisième ligne est importante : `noControls.js` masque les boutons natifs de la fenêtre, et les autres thèmes ne leur laissent pas de place — voir [Récupérer les boutons natifs](#récupérer-les-boutons-natifs). Pour supprimer complètement les modifications de Spicetify, lance `spicetify restore` (puis `spicetify backup apply` pour les rétablir).
 
 ## Crédits
 
