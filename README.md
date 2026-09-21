@@ -50,6 +50,8 @@ Both folders live in your Spicetify config directory: `%appdata%\spicetify\` on 
    spicetify config extensions noControls.js
    ```
    `spicetify config extensions noControls.js` adds the extension to your list, it doesn't replace the extensions you already use.
+
+   Want another palette than `TokyoNight`? See [Changing the palette or theme](#changing-the-palette-or-theme).
 5. Apply:
    ```
    spicetify apply
@@ -99,13 +101,65 @@ Spotify updates can overwrite Spicetify's changes or rename the classes the them
 
 If something else breaks, please open an issue with a screenshot and your Spotify and Spicetify versions (`spicetify -v`).
 
-## Available palettes
+## Changing the palette or theme
 
-The `color.ini` file includes several palettes (TokyoNight, TokyoNightStorm, Catppuccin, Dracula, Gruvbox, Nord, Rosé Pine, Solarized, Everforest, and more). Switch palettes with:
+All the colors live in `color.ini`, one palette per `[Section]`. The value you give to `color_scheme` must match a section name **exactly** — same capitalization, no spaces, no accents (`RosePine`, not `Rosé Pine`; `CatppuccinMocha`, not `Catppuccin`).
+
+### Switch to another palette
+
+1. Pick a name from the list below, or list them straight from your install:
+   ```powershell
+   Select-String -Path "$(spicetify -c | Split-Path)\Themes\TUI\color.ini" -Pattern '^\[(.+)\]' | ForEach-Object { $_.Matches[0].Groups[1].Value }
+   ```
+2. Set it and apply (example with Dracula):
+   ```
+   spicetify config color_scheme Dracula
+   spicetify apply
+   ```
+3. Check with `spicetify config` that `current_theme` is `TUI`, `color_scheme` is the palette you chose, and that `inject_css` and `replace_colors` are both `1`.
+
+Available palettes: `TokyoNight` (default in this guide), `TokyoNightStorm`, `CatppuccinMocha`, `CatppuccinMacchiato`, `CatppuccinLatte`, `Dracula`, `Gruvbox`, `Kanagawa`, `Nord`, `Rigel`, `RosePine`, `RosePineMoon`, `RosePineDawn`, `Solarized`, `EverforestDarkMedium`, `ForestGreen`, `Spotify`, `Spicetify`.
+
+**Nothing changed after `spicetify apply`?**
+
+- The name doesn't match a section of `color.ini` exactly (see the note above).
+- `replace_colors` is `0`: run `spicetify config replace_colors 1 inject_css 1`, then `spicetify apply`.
+- You edited `color.ini` in a downloaded copy of the repo instead of the one Spicetify reads: it must be in `%appdata%\spicetify\Themes\TUI\` (`spicetify -c | Split-Path` prints the config folder).
+- Spotify didn't reload: close it completely (system tray included), reopen it, or run `spicetify apply` again.
+
+### Create your own palette
+
+Copy an existing block of `color.ini`, rename the `[Section]`, and change the values (hex colors, **without** the `#`):
+
+```ini
+[MyPalette]
+accent             = ff79c6
+accent-active      = ff79c6
+accent-inactive    = 1e1e2e
+banner             = ff79c6
+border-active      = ff79c6
+border-inactive    = 313244
+header             = 585b70
+highlight          = 585b70
+main               = 1e1e2e
+notification       = 89b4fa
+notification-error = f38ba8
+subtext            = a6adc8
+text               = cdd6f4
 ```
-spicetify config color_scheme <PaletteName>
+
+Then `spicetify config color_scheme MyPalette` and `spicetify apply`. All 13 keys must be present. Roughly: `main` is the background, `text`/`subtext` the text colors, and `accent` the highlight color.
+
+### Use a different theme (not TUI)
+
+```
+spicetify config current_theme <ThemeFolderName>
+spicetify config color_scheme <a palette from that theme's color.ini>
+spicetify config extensions noControls.js-
 spicetify apply
 ```
+
+The third line matters: `noControls.js` hides the native window buttons, and other themes don't make room for them — see [Getting the native buttons back](#getting-the-native-buttons-back). To remove Spicetify's changes entirely, run `spicetify restore` (and `spicetify backup apply` to bring them back).
 
 ## Credits
 
