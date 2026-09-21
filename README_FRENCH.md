@@ -9,6 +9,23 @@ Basé à l'origine sur le thème communautaire [`text`](https://github.com/spice
 
 > Développé et testé sous Windows 11 avec Spotify 1.3.1 et Spicetify 2.45.1. Les mises à jour de Spotify renomment régulièrement ses classes CSS internes : si quelque chose ne s'affiche plus correctement après une mise à jour, voir [Après une mise à jour de Spotify](#après-une-mise-à-jour-de-spotify).
 
+## Sommaire
+
+- [Aperçu](#aperçu)
+- [Prérequis](#prérequis)
+- [Contenu du dépôt](#contenu-du-dépôt)
+- [Installation](#installation)
+- [L'extension `noControls.js`](#lextension-nocontrolsjs)
+- [À propos du cadre de fenêtre](#à-propos-du-cadre-de-fenêtre)
+  - [Récupérer les boutons natifs](#récupérer-les-boutons-natifs)
+- [Après une mise à jour de Spotify](#après-une-mise-à-jour-de-spotify)
+- [Changer de palette ou de thème](#changer-de-palette-ou-de-thème)
+  - [Passer à une autre palette](#passer-à-une-autre-palette)
+  - [Créer ta propre palette](#créer-ta-propre-palette)
+  - [Utiliser un autre thème (que TUI)](#utiliser-un-autre-thème-que-tui)
+- [Crédits](#crédits)
+- [Licence](#licence)
+
 ## Aperçu
 
 ![Vue d'accueil](preview-home.png)
