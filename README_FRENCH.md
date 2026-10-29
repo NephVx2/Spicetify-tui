@@ -6,9 +6,9 @@ Un thème Spicetify inspiré de [spotify-tui](https://github.com/Rigellute/spoti
 
 Basé à l'origine sur le thème communautaire [`text`](https://github.com/spicetify/spicetify-themes/tree/main/text) du dépôt officiel `spicetify-themes`, largement retravaillé (barre de progression, barre de volume, mise en page, cadre de fenêtre, correctifs de compatibilité avec les mises à jour récentes de Spotify).
 
-En plus du thème, le dépôt fournit quelques petites **extensions Spicetify** : une qui nettoie les fonds et les pochettes, un contournement pour la barre d'onglets du Marketplace, et des **personnages animés en GIF déplaçables** (Sonic, Tails, Shadow, Miku, Tanjiro...) que tu peux déplacer, redimensionner ou désactiver.
+En plus du thème, le dépôt fournit quelques petites **extensions Spicetify** : une qui supprime les boutons natifs de la fenêtre, une qui nettoie les fonds et les pochettes, et des **personnages animés en GIF déplaçables** (Sonic, Tails, Shadow, Miku, Tanjiro...) que tu peux déplacer, redimensionner ou désactiver.
 
-> Développé et testé sous Windows 11 avec Spotify 1.3.4 et Spicetify 2.45.3 (octobre 2026). Les mises à jour de Spotify renomment régulièrement ses classes CSS internes et changent la structure de ses pages : si quelque chose ne s'affiche plus correctement après une mise à jour, voir [Après une mise à jour de Spotify](#après-une-mise-à-jour-de-spotify).
+> Développé et testé sous Windows 11 avec Spotify 1.3.6 et Spicetify 2.46.4 (octobre 2026). Les mises à jour de Spotify renomment régulièrement ses classes CSS internes et changent la structure de ses pages : si quelque chose ne s'affiche plus correctement après une mise à jour, voir [Après une mise à jour de Spotify](#après-une-mise-à-jour-de-spotify).
 
 ## Sommaire
 
@@ -19,8 +19,8 @@ En plus du thème, le dépôt fournit quelques petites **extensions Spicetify** 
 - [Les extensions](#les-extensions)
   - [`noControls.js`](#nocontrolsjs)
   - [`flatBackgrounds.js`](#flatbackgroundsjs)
-  - [`marketplaceTabs.js`](#marketplacetabsjs)
   - [`draggablePets.js`](#draggablepetsjs)
+  - [`marketplaceTabs.js` (retirée)](#marketplacetabsjs-retirée)
 - [Les personnages animés](#les-personnages-animés)
   - [Les utiliser](#les-utiliser)
   - [Où ils apparaissent](#où-ils-apparaissent)
@@ -44,7 +44,7 @@ En plus du thème, le dépôt fournit quelques petites **extensions Spicetify** 
 
 ## Prérequis
 
-- [Spicetify](https://spicetify.app/) installé et fonctionnel (2.45.3 testé)
+- [Spicetify](https://spicetify.app/) installé et fonctionnel (2.46.4 testé)
 - Spotify desktop installé avec l'installeur officiel — Spicetify ne prend pas en charge la version du Microsoft Store
 - La police **[0xProto Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/0xProto.zip)** installée sur le système — indispensable à l'alignement de la bannière ASCII et aux glyphes des contrôles
 - Une connexion internet au démarrage de Spotify : `user.css` charge la police `asciid` (utilisée pour les titres ASCII des pages) depuis `fonts.cdnfonts.com`, ainsi que des polices monospace alternatives de Google Fonts
@@ -57,7 +57,6 @@ En plus du thème, le dépôt fournit quelques petites **extensions Spicetify** 
 | `color.ini` | Les palettes de couleurs | `Themes/TUI/` |
 | `noControls.js` | Extension qui supprime les contrôles natifs de la fenêtre ([détails](#nocontrolsjs)) | `Extensions/` |
 | `flatBackgrounds.js` | Extension qui aplatit les fonds et masque les pochettes d'en-tête ([détails](#flatbackgroundsjs)) | `Extensions/` |
-| `marketplaceTabs.js` | Extension qui rétablit la barre d'onglets du Marketplace ([détails](#marketplacetabsjs)) | `Extensions/` |
 | `draggablePets.js` | Extension qui ajoute les personnages animés déplaçables ([détails](#draggablepetsjs)) | `Extensions/` |
 
 Ces deux dossiers se trouvent dans ton répertoire de configuration Spicetify : `%appdata%\spicetify\` sous Windows, `~/.config/spicetify/` sous Linux/macOS. `spicetify -c` affiche le chemin du fichier `config-xpui.ini`, qui se trouve dans ce même répertoire.
@@ -68,19 +67,18 @@ Ces deux dossiers se trouvent dans ton répertoire de configuration Spicetify : 
 |---|---|
 | `noControls.js` | Recommandée — le thème est pensé pour une fenêtre sans boutons natifs |
 | `flatBackgrounds.js` | Recommandée — sans elle, les pochettes d'en-tête peuvent rester visibles et des dégradés colorés peuvent revenir sur certaines pages |
-| `marketplaceTabs.js` | Seulement si tu utilises le Marketplace — elle contourne un bug amont et peut être retirée quand il sera corrigé |
 | `draggablePets.js` | Facultative — purement décorative (et le fichier le plus lourd, environ 670 Ko, car les GIF y sont embarqués) |
 
 ## Installation
 
 1. Installe la police **0xProto Nerd Font Mono** (lien ci-dessus) si ce n'est pas déjà fait.
-2. Télécharge `user.css`, `color.ini` et les extensions de ton choix (`noControls.js`, `flatBackgrounds.js`, `marketplaceTabs.js`, `draggablePets.js`) de ce dépôt.
+2. Télécharge `user.css`, `color.ini` et les extensions de ton choix (`noControls.js`, `flatBackgrounds.js`, `draggablePets.js`) de ce dépôt.
 3. Copie-les dans ton répertoire de configuration Spicetify. Depuis le dossier qui contient les fichiers téléchargés, dans PowerShell :
    ```powershell
    $cfg = spicetify -c | Split-Path
    New-Item -ItemType Directory -Force "$cfg\Themes\TUI", "$cfg\Extensions" | Out-Null
    Copy-Item .\user.css, .\color.ini "$cfg\Themes\TUI\"
-   Copy-Item .\noControls.js, .\flatBackgrounds.js, .\marketplaceTabs.js, .\draggablePets.js "$cfg\Extensions\"
+   Copy-Item .\noControls.js, .\flatBackgrounds.js, .\draggablePets.js "$cfg\Extensions\"
    ```
    Ou à la main : `user.css` et `color.ini` vont dans un nouveau dossier `Themes/TUI/`, les fichiers `.js` vont dans `Extensions/`. Laisse de côté les extensions dont tu ne veux pas.
 4. Active le thème et les extensions :
@@ -90,7 +88,6 @@ Ces deux dossiers se trouvent dans ton répertoire de configuration Spicetify : 
    spicetify config inject_css 1 replace_colors 1 overwrite_assets 1
    spicetify config extensions noControls.js
    spicetify config extensions flatBackgrounds.js
-   spicetify config extensions marketplaceTabs.js
    spicetify config extensions draggablePets.js
    ```
    Chaque `spicetify config extensions <fichier>` ajoute l'extension à ta liste, elle ne remplace pas les extensions que tu utilises déjà. Saute les lignes des extensions que tu n'as pas copiées.
@@ -115,6 +112,8 @@ Le thème est pensé pour une fenêtre sans boutons natifs réduire/agrandir/fer
 
 Comme cet espace n'existe plus, les boutons natifs risquent de chevaucher les icônes en haut à droite si l'extension n'est pas chargée. Installe donc l'extension (étapes 3 et 4 ci-dessus) ou suis la procédure [Récupérer les boutons natifs](#récupérer-les-boutons-natifs).
 
+Spotify peut remettre sa barre de titre après le démarrage (focus de la fenêtre, restauration après réduction, redimensionnement, sortie de veille), ce qui affiche les boutons natifs sous forme de petits traits blancs au-dessus de l'application. Dans ce dépôt, `noControls.js` les masque de nouveau à ces occasions, et toutes les 5 secondes par sécurité, au lieu de ne le faire que pendant les 10 premières secondes. Un bref éclair des boutons natifs pendant le démarrage ou le rechargement (F5) de Spotify est normal : l'extension ne peut agir qu'une fois les API de Spotify disponibles, et le CSS ne peut pas les masquer car ils ne font pas partie de la page.
+
 ### `flatBackgrounds.js`
 
 Spotify peint ses pages avec des teintes et des dégradés qui dépendent de la pochette, et renomme à chaque mise à jour les classes CSS qui les portent. Cette extension fait ce travail sans dépendre des noms de classes :
@@ -125,15 +124,19 @@ Spotify peint ses pages avec des teintes et des dégradés qui dépendent de la 
 
 Elle ne regarde que `#main-view`, réagit aux changements de page au moment où ils se produisent (donc sans flash) et laisse tranquilles les boutons, champs, lignes et menus.
 
-### `marketplaceTabs.js`
-
-Depuis Spotify 1.3.3, l'application personnalisée Marketplace n'affiche plus sa barre d'onglets (Extensions / Thèmes / Bribes / Applications), avec ou sans thème : elle la monte dans un élément que Spotify a supprimé. C'est un bug amont, suivi dans [spicetify/marketplace #1253](https://github.com/spicetify/marketplace/issues/1253) et [#1265](https://github.com/spicetify/marketplace/issues/1265). L'extension recrée cet élément vide en haut de la vue principale pour que les onglets puissent de nouveau s'afficher.
-
-Tu n'en as besoin que si tu utilises le Marketplace. Une fois le Marketplace corrigé, retire-la : `spicetify config extensions marketplaceTabs.js-`, puis `spicetify apply`. `user.css` met aussi en forme la grille du Marketplace (3 colonnes, texte des cartes réduit, bouton « Ajouter CSS » discret).
-
 ### `draggablePets.js`
 
 Ajoute les personnages animés décrits [ci-dessous](#les-personnages-animés). Le fichier pèse environ 670 Ko car les GIF y sont embarqués en base64 ; la logique elle-même fait environ 360 lignes.
+
+### `marketplaceTabs.js` (retirée)
+
+Les versions précédentes de ce dépôt fournissaient `marketplaceTabs.js`, un contournement pour l'application personnalisée Marketplace qui perdait sa barre d'onglets (Extensions / Thèmes / Bribes / Applications) à partir de Spotify 1.3.3 (issues amont [#1253](https://github.com/spicetify/marketplace/issues/1253) et [#1265](https://github.com/spicetify/marketplace/issues/1265)). Avec un Marketplace à jour, les onglets s'affichent correctement sans elle (testé avec Spotify 1.3.6) : l'extension a donc été retirée du dépôt.
+
+- **Si tu l'avais installée avec une version précédente de ce thème**, désactive-la : `spicetify config extensions marketplaceTabs.js-`, puis `spicetify apply`.
+- **Si les onglets du Marketplace sont absents**, mets le Marketplace à jour en relançant son script d'installation (voir le [guide d'installation du Marketplace](https://github.com/spicetify/marketplace/wiki/Installation)). Quand il demande s'il doit remplacer ton thème local par un thème « placeholder », réponds **N** pour conserver TUI.
+- **Sur un ancien Marketplace impossible à mettre à jour**, le fichier reste disponible dans l'historique Git de ce dépôt.
+
+`user.css` met toujours en forme la grille du Marketplace (3 colonnes, texte des cartes réduit, bouton « Ajouter CSS » discret).
 
 ## Les personnages animés
 
@@ -221,10 +224,11 @@ Une mise à jour de Spotify peut écraser les modifications de Spicetify, renomm
 3. **Utilisateurs de Scoop :** mets Spicetify à jour avec `scoop update spicetify-cli`. La commande intégrée `spicetify update` peut échouer sur une installation Scoop.
 4. **Si un dégradé coloré ou une teinte revient** (haut de l'accueil, haut d'une page playlist...), les règles qui les neutralisent ont besoin des nouveaux noms de classe générés par Spotify. Elles ressemblent à `[class*="dqwQh"]` et sont regroupées dans les blocs commentés « Spotify 1.3.x » vers la fin de `user.css`.
 5. **Si la bannière ASCII disparaît**, regarde la règle située juste sous le commentaire « MAIN VIEW » : elle s'appuie sur `[data-testid="home-page"]`.
+6. **Si les cadres des panneaux, la bannière ASCII ou la barre de lecture apparaissent en double ou mal placés**, Spotify a probablement ramené des noms de classe qui avaient disparu. Les anciennes règles par classes et les nouvelles (ids, `data-testid`) s'appliquent alors en même temps. Le bloc commenté « Anti-doublons » à la fin de `user.css` neutralise les anciennes règles ; utilise les DevTools (ci-dessous) pour voir quels éléments portent le cadre ou la bannière et complète ce bloc si besoin.
 
 Pour retrouver les nouveaux noms de classe, active les DevTools : `spicetify config always_enable_devtools 1`, puis `spicetify apply`, redémarre Spotify et appuie sur Ctrl+Shift+I (ou clic droit → Inspecter l'élément). Sélectionne la zone colorée, copie quelques caractères de son nom de classe et mets la règle correspondante à jour. Copie-les plutôt que de les retaper : dans la police de DevTools, `I`/`l` et `0`/`O` se ressemblent. Lance ensuite `spicetify apply`.
 
-À vérifier aussi après une mise à jour : si le [bug du Marketplace](#marketplacetabsjs) a été corrigé en amont (dans ce cas `marketplaceTabs.js` peut disparaître).
+À vérifier aussi après une mise à jour : que les onglets du Marketplace s'affichent toujours (voir [`marketplaceTabs.js` (retirée)](#marketplacetabsjs-retirée) s'ils disparaissent).
 
 Si autre chose ne fonctionne plus, ouvre une issue avec une capture d'écran et tes versions de Spotify et Spicetify (`spicetify -v`).
 
@@ -287,7 +291,7 @@ spicetify config extensions flatBackgrounds.js-
 spicetify apply
 ```
 
-La troisième ligne est importante : `noControls.js` masque les boutons natifs de la fenêtre, et les autres thèmes ne leur laissent pas de place — voir [Récupérer les boutons natifs](#récupérer-les-boutons-natifs). `flatBackgrounds.js` est écrite pour ce thème et aplatirait aussi les fonds d'un autre thème, retire-la donc elle aussi. `draggablePets.js` et `marketplaceTabs.js` ne dépendent pas du thème et peuvent rester. Pour supprimer complètement les modifications de Spicetify, lance `spicetify restore` (puis `spicetify backup apply` pour les rétablir).
+La troisième ligne est importante : `noControls.js` masque les boutons natifs de la fenêtre, et les autres thèmes ne leur laissent pas de place — voir [Récupérer les boutons natifs](#récupérer-les-boutons-natifs). `flatBackgrounds.js` est écrite pour ce thème et aplatirait aussi les fonds d'un autre thème, retire-la donc elle aussi. `draggablePets.js` ne dépend pas du thème et peut rester. Pour supprimer complètement les modifications de Spicetify, lance `spicetify restore` (puis `spicetify backup apply` pour les rétablir).
 
 ## Dépannage
 
@@ -295,7 +299,9 @@ La troisième ligne est importante : `noControls.js` masque les boutons natifs d
 - **Les personnages apparaissent en double :** tu mélanges une ancienne version de `user.css` (qui dessinait certains personnages en CSS) avec l'extension actuelle. Utilise le `user.css` de ce dépôt.
 - **Un personnage est coincé au mauvais endroit :** double-clique dessus, ou utilise **Reset positions & sizes** dans le panneau.
 - **Un personnage recouvre un bouton :** éloigne-le ; les personnages capturent la souris quand tu les survoles.
-- **Les onglets du Marketplace sont absents :** active `marketplaceTabs.js` (voir [plus haut](#marketplacetabsjs)).
+- **Les onglets du Marketplace sont absents :** mets le Marketplace à jour en relançant son script d'installation (voir [`marketplaceTabs.js` (retirée)](#marketplacetabsjs-retirée)).
+- **De petits traits blancs apparaissent au-dessus de la fenêtre de l'application :** ce sont les boutons natifs de la fenêtre qui reviennent. Vérifie que `noControls.js` est activée et que c'est la version de ce dépôt (elle réapplique le masquage au focus, au redimensionnement et à la restauration) ; un bref éclair pendant le chargement de Spotify est normal.
+- **Les cadres, la bannière ou la barre de lecture apparaissent en double après une mise à jour :** voir le point 6 de [Après une mise à jour de Spotify](#après-une-mise-à-jour-de-spotify).
 - **La pochette d'en-tête ou des dégradés colorés reviennent sur les pages playlist :** `flatBackgrounds.js` n'est pas activée, ou une mise à jour de Spotify a changé un nom de classe (voir [Après une mise à jour de Spotify](#après-une-mise-à-jour-de-spotify)).
 - **La console affiche des avertissements :** les DevTools peuvent lister des avertissements sur le préchargement de polices, des requêtes `sentry.io` en échec (si tu bloques la télémétrie) et des erreurs `Resolver not found` répétées venant de `noControls.js` avec les versions récentes de Spotify. Elles n'affectent pas le thème.
 
@@ -303,9 +309,8 @@ La troisième ligne est importante : `noControls.js` masque les boutons natifs d
 
 - Thème de base `text` : [spicetify/spicetify-themes](https://github.com/spicetify/spicetify-themes)
 - Inspiration : [Rigellute/spotify-tui](https://github.com/Rigellute/spotify-tui)
-- `noControls.js` : par OhItsTom et Podpah (une extension de la communauté Spicetify), incluse ici par commodité
+- `noControls.js` : par OhItsTom et Podpah (une extension de la communauté Spicetify), incluse ici par commodité et modifiée pour réappliquer le masquage de la barre de titre
 - Sonic sur la barre de progression : l'idée vient du snippet « Sonic Dancing » de [@uhAlexz](https://github.com/uhAlexz), via [spicetify/marketplace](https://github.com/spicetify/marketplace). Dans ce dépôt, les personnages sont dessinés par `draggablePets.js` : il n'est donc pas nécessaire d'installer ce snippet.
-- Contournement de la barre d'onglets du Marketplace : voir les issues amont [#1253](https://github.com/spicetify/marketplace/issues/1253) et [#1265](https://github.com/spicetify/marketplace/issues/1265).
 
 **À propos des GIF animés.** Les personnages appartiennent à leurs propriétaires et créateurs respectifs : Sonic, Tails et Shadow (SEGA), Hatsune Miku (Crypton Future Media), Tanjiro (*Demon Slayer*), et les autres illustrations (le chat, Ambers) viennent de leurs auteurs. Les GIF ont été pris sur des sources tierces, ne sont fournis ici que comme petits éléments décoratifs, et **ne sont pas** couverts par la licence de ce dépôt. Les trois personnages en pixel art ont été ramenés sans perte à leur taille native et les autres GIF ont été réduits pour garder l'extension légère. Si tu es titulaire de droits et souhaites qu'un GIF soit retiré, ou si tu connais l'auteur de l'un d'eux et souhaites qu'il soit crédité, ouvre une issue.
 
