@@ -6,9 +6,9 @@ A Spicetify theme inspired by [spotify-tui](https://github.com/Rigellute/spotify
 
 Originally based on the community [`text`](https://github.com/spicetify/spicetify-themes/tree/main/text) theme from the official `spicetify-themes` repo, heavily reworked since (progress bar, volume bar, layout, window frame, and compatibility fixes for recent Spotify updates).
 
-Besides the theme, the repo ships a few small **Spicetify extensions**: one that cleans up backgrounds and cover art, a workaround for the Marketplace tab bar, and **draggable animated GIF characters** (Sonic, Tails, Shadow, Miku, Tanjiro...) that you can move around, resize, or switch off.
+Besides the theme, the repo ships a few small **Spicetify extensions**: one that removes the native window buttons, one that cleans up backgrounds and cover art, and **draggable animated GIF characters** (Sonic, Tails, Shadow, Miku, Tanjiro...) that you can move around, resize, or switch off.
 
-> Developed and tested on Windows 11 with Spotify 1.3.4 and Spicetify 2.45.3 (October 2026). Spotify updates regularly rename its internal CSS classes and change its page structure, so if something looks off after an update, see [After a Spotify update](#after-a-spotify-update).
+> Developed and tested on Windows 11 with Spotify 1.3.6 and Spicetify 2.46.4 (October 2026). Spotify updates regularly rename its internal CSS classes and change its page structure, so if something looks off after an update, see [After a Spotify update](#after-a-spotify-update).
 
 ## Table of contents
 
@@ -19,8 +19,8 @@ Besides the theme, the repo ships a few small **Spicetify extensions**: one that
 - [The extensions](#the-extensions)
   - [`noControls.js`](#nocontrolsjs)
   - [`flatBackgrounds.js`](#flatbackgroundsjs)
-  - [`marketplaceTabs.js`](#marketplacetabsjs)
   - [`draggablePets.js`](#draggablepetsjs)
+  - [`marketplaceTabs.js` (removed)](#marketplacetabsjs-removed)
 - [The animated characters](#the-animated-characters)
   - [Using them](#using-them)
   - [Where they appear](#where-they-appear)
@@ -44,7 +44,7 @@ Besides the theme, the repo ships a few small **Spicetify extensions**: one that
 
 ## Requirements
 
-- [Spicetify](https://spicetify.app/) installed and working (2.45.3 tested)
+- [Spicetify](https://spicetify.app/) installed and working (2.46.4 tested)
 - Spotify desktop installed with the official installer — Spicetify does not support the Microsoft Store version
 - The **[0xProto Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/0xProto.zip)** font installed on your system — required for the ASCII banner alignment and the control glyphs
 - An internet connection when Spotify starts: `user.css` loads the `asciid` font (used for the ASCII page titles) from `fonts.cdnfonts.com`, and optional Google Fonts monospace alternatives
@@ -57,7 +57,6 @@ Besides the theme, the repo ships a few small **Spicetify extensions**: one that
 | `color.ini` | The color palettes | `Themes/TUI/` |
 | `noControls.js` | Extension that removes the native window controls ([details](#nocontrolsjs)) | `Extensions/` |
 | `flatBackgrounds.js` | Extension that flattens backgrounds and hides header cover art ([details](#flatbackgroundsjs)) | `Extensions/` |
-| `marketplaceTabs.js` | Extension that brings the Marketplace tab bar back ([details](#marketplacetabsjs)) | `Extensions/` |
 | `draggablePets.js` | Extension that adds the draggable animated characters ([details](#draggablepetsjs)) | `Extensions/` |
 
 Both folders live in your Spicetify config directory: `%appdata%\spicetify\` on Windows, `~/.config/spicetify/` on Linux/macOS. `spicetify -c` prints the path of the `config-xpui.ini` file, which sits in that same directory.
@@ -68,19 +67,18 @@ Both folders live in your Spicetify config directory: `%appdata%\spicetify\` on 
 |---|---|
 | `noControls.js` | Recommended — the theme is designed for a window without native buttons |
 | `flatBackgrounds.js` | Recommended — without it, header cover art can stay visible and colored gradients can come back on some pages |
-| `marketplaceTabs.js` | Only if you use the Marketplace — it works around an upstream bug and can be removed once that is fixed |
 | `draggablePets.js` | Optional — purely decorative (and the heaviest file, about 670 KB, because the GIFs are embedded in it) |
 
 ## Installation
 
 1. Install the **0xProto Nerd Font Mono** font (link above) if you haven't already.
-2. Download `user.css`, `color.ini` and the extensions you want (`noControls.js`, `flatBackgrounds.js`, `marketplaceTabs.js`, `draggablePets.js`) from this repo.
+2. Download `user.css`, `color.ini` and the extensions you want (`noControls.js`, `flatBackgrounds.js`, `draggablePets.js`) from this repo.
 3. Copy them into your Spicetify config directory. From the folder containing the downloaded files, in PowerShell:
    ```powershell
    $cfg = spicetify -c | Split-Path
    New-Item -ItemType Directory -Force "$cfg\Themes\TUI", "$cfg\Extensions" | Out-Null
    Copy-Item .\user.css, .\color.ini "$cfg\Themes\TUI\"
-   Copy-Item .\noControls.js, .\flatBackgrounds.js, .\marketplaceTabs.js, .\draggablePets.js "$cfg\Extensions\"
+   Copy-Item .\noControls.js, .\flatBackgrounds.js, .\draggablePets.js "$cfg\Extensions\"
    ```
    Or by hand: `user.css` and `color.ini` go in a new `Themes/TUI/` folder, the `.js` files go in `Extensions/`. Leave out the extensions you don't want.
 4. Enable the theme and the extensions:
@@ -90,7 +88,6 @@ Both folders live in your Spicetify config directory: `%appdata%\spicetify\` on 
    spicetify config inject_css 1 replace_colors 1 overwrite_assets 1
    spicetify config extensions noControls.js
    spicetify config extensions flatBackgrounds.js
-   spicetify config extensions marketplaceTabs.js
    spicetify config extensions draggablePets.js
    ```
    Each `spicetify config extensions <file>` adds the extension to your list, it doesn't replace the extensions you already use. Skip the lines of the extensions you didn't copy.
@@ -115,6 +112,8 @@ The theme is designed for a window without native minimize/maximize/close button
 
 Because that space is gone, the native buttons may overlap the top-right icons if the extension isn't loaded. Either install the extension (steps 3 and 4 above) or follow [Getting the native buttons back](#getting-the-native-buttons-back).
 
+Spotify can bring its title bar back after startup (window focus, restore from minimize, resize, wake from sleep), which shows the native buttons as thin white marks above the app. In this repo `noControls.js` hides them again on those events, and every 5 seconds as a safety net, instead of only during the first 10 seconds. A brief flash of the native buttons while Spotify starts or reloads (F5) is normal: the extension can only act once Spotify's APIs are available, and the CSS can't hide them because they are not part of the page.
+
 ### `flatBackgrounds.js`
 
 Spotify paints its pages with color tints and gradients that depend on the album art, and it renames the CSS classes that carry them with every update. This extension does that work in a way that doesn't depend on class names:
@@ -125,15 +124,19 @@ Spotify paints its pages with color tints and gradients that depend on the album
 
 It only looks at `#main-view`, reacts to page changes as they happen (so there is no flash), and leaves buttons, inputs, rows and menus alone.
 
-### `marketplaceTabs.js`
-
-Since Spotify 1.3.3, the Marketplace custom app no longer shows its tab bar (Extensions / Themes / Snippets / Apps), with or without a theme: it mounts the bar into an element that Spotify removed. This is an upstream bug, tracked in [spicetify/marketplace #1253](https://github.com/spicetify/marketplace/issues/1253) and [#1265](https://github.com/spicetify/marketplace/issues/1265). The extension recreates that empty element at the top of the main view so the tabs can render again.
-
-You only need it if you use the Marketplace. Once the Marketplace is fixed, remove it: `spicetify config extensions marketplaceTabs.js-`, then `spicetify apply`. `user.css` also tidies the Marketplace grid (3 columns, smaller card text, a discreet "Add CSS" button).
-
 ### `draggablePets.js`
 
 Adds the animated characters described [below](#the-animated-characters). The file is about 670 KB because the GIFs are embedded in it as base64; the logic itself is around 360 lines.
+
+### `marketplaceTabs.js` (removed)
+
+Earlier versions of this repo shipped `marketplaceTabs.js`, a workaround for the Marketplace custom app losing its tab bar (Extensions / Themes / Snippets / Apps) on Spotify 1.3.3 and later (upstream issues [#1253](https://github.com/spicetify/marketplace/issues/1253) and [#1265](https://github.com/spicetify/marketplace/issues/1265)). With an up-to-date Marketplace the tabs display correctly without it (tested with Spotify 1.3.6), so the extension was removed from the repo.
+
+- **If you installed it from an earlier version of this theme**, disable it: `spicetify config extensions marketplaceTabs.js-`, then `spicetify apply`.
+- **If the Marketplace tabs are missing**, update the Marketplace by running its install script again (see the [Marketplace installation guide](https://github.com/spicetify/marketplace/wiki/Installation)). When it asks whether to replace your local theme with a placeholder, answer **N** to keep TUI.
+- **On an old Marketplace that can't be updated**, the file is still available in this repository's Git history.
+
+`user.css` still tidies the Marketplace grid (3 columns, smaller card text, a discreet "Add CSS" button).
 
 ## The animated characters
 
@@ -221,10 +224,11 @@ Spotify updates can overwrite Spicetify's changes, rename the classes the theme 
 3. **Scoop users:** update Spicetify with `scoop update spicetify-cli`. The built-in `spicetify update` can fail on a Scoop install.
 4. **If a colored gradient or tint comes back** (top of the home page, top of a playlist page...), the rules that neutralize them need the new class names Spotify generated. They look like `[class*="dqwQh"]` and are grouped in the blocks commented "Spotify 1.3.x" near the end of `user.css`.
 5. **If the ASCII banner disappears**, check the rule just below the "MAIN VIEW" comment: it relies on `[data-testid="home-page"]`.
+6. **If panel frames, the ASCII banner or the playback bar look doubled or misplaced**, Spotify has probably brought back class names that were gone for a while. The older class-based rules and the newer ones (ids, `data-testid`) then match at the same time. The block commented "Anti-doublons" at the end of `user.css` neutralizes the old rules; use DevTools (below) to see which elements carry the frame or the banner and extend that block if needed.
 
 To find new class names, enable DevTools: `spicetify config always_enable_devtools 1`, then `spicetify apply`, restart Spotify and press Ctrl+Shift+I (or right-click → Inspect element). Select the colored area, copy a few characters of its class name, and update the matching rule. Copy rather than retype: in the DevTools font, `I`/`l` and `0`/`O` look alike. Then run `spicetify apply` again.
 
-Also worth checking after an update: whether the [Marketplace bug](#marketplacetabsjs) has been fixed upstream (then `marketplaceTabs.js` can go).
+Also worth checking after an update: whether the Marketplace tabs still display (see [`marketplaceTabs.js` (removed)](#marketplacetabsjs-removed) if they don't).
 
 If something else breaks, open an issue with a screenshot and your Spotify and Spicetify versions (`spicetify -v`).
 
@@ -287,7 +291,7 @@ spicetify config extensions flatBackgrounds.js-
 spicetify apply
 ```
 
-The third line matters: `noControls.js` hides the native window buttons, and other themes don't make room for them — see [Getting the native buttons back](#getting-the-native-buttons-back). `flatBackgrounds.js` is written for this theme and would also flatten another theme's backgrounds, so remove it too. `draggablePets.js` and `marketplaceTabs.js` don't depend on the theme and can stay. To remove Spicetify's changes entirely, run `spicetify restore` (and `spicetify backup apply` to bring them back).
+The third line matters: `noControls.js` hides the native window buttons, and other themes don't make room for them — see [Getting the native buttons back](#getting-the-native-buttons-back). `flatBackgrounds.js` is written for this theme and would also flatten another theme's backgrounds, so remove it too. `draggablePets.js` doesn't depend on the theme and can stay. To remove Spicetify's changes entirely, run `spicetify restore` (and `spicetify backup apply` to bring them back).
 
 ## Troubleshooting
 
@@ -295,7 +299,9 @@ The third line matters: `noControls.js` hides the native window buttons, and oth
 - **Characters appear twice:** you are mixing an older version of `user.css` (which drew some characters in CSS) with the current extension. Use the `user.css` of this repo.
 - **A character is stuck in the wrong place:** double-click it, or use **Reset positions & sizes** in the panel.
 - **A character covers a button:** drag it away; characters capture the mouse while you hover them.
-- **Marketplace tabs are missing:** enable `marketplaceTabs.js` (see [above](#marketplacetabsjs)).
+- **Marketplace tabs are missing:** update the Marketplace by running its install script again (see [`marketplaceTabs.js` (removed)](#marketplacetabsjs-removed)).
+- **Thin white marks appear above the app window:** they are the native window buttons coming back. Make sure `noControls.js` is enabled and is the version from this repo (it re-applies the hiding on focus, resize and restore); a brief flash while Spotify loads is normal.
+- **Frames, banner or playback bar look doubled after an update:** see point 6 of [After a Spotify update](#after-a-spotify-update).
 - **Header cover art or colored gradients are back on playlist pages:** `flatBackgrounds.js` is not enabled, or a Spotify update changed a class name (see [After a Spotify update](#after-a-spotify-update)).
 - **The console shows warnings:** DevTools may list warnings about preloaded fonts, failed `sentry.io` requests (if you block telemetry) and repeated `Resolver not found` errors coming from `noControls.js` with recent Spotify versions. They don't affect the theme.
 
@@ -303,9 +309,8 @@ The third line matters: `noControls.js` hides the native window buttons, and oth
 
 - Base `text` theme: [spicetify/spicetify-themes](https://github.com/spicetify/spicetify-themes)
 - Inspiration: [Rigellute/spotify-tui](https://github.com/Rigellute/spotify-tui)
-- `noControls.js`: by OhItsTom and Podpah (a Spicetify community extension), included here for convenience
+- `noControls.js`: by OhItsTom and Podpah (a Spicetify community extension), included here for convenience and modified to re-apply the title bar hiding
 - Sonic on the progress bar: the idea comes from the "Sonic Dancing" snippet by [@uhAlexz](https://github.com/uhAlexz), via [spicetify/marketplace](https://github.com/spicetify/marketplace). In this repo the characters are drawn by `draggablePets.js`, so you don't need to install that snippet.
-- Marketplace tab bar workaround: see the upstream issues [#1253](https://github.com/spicetify/marketplace/issues/1253) and [#1265](https://github.com/spicetify/marketplace/issues/1265).
 
 **About the animated GIFs.** The characters belong to their respective owners and creators: Sonic, Tails and Shadow (SEGA), Hatsune Miku (Crypton Future Media), Tanjiro (*Demon Slayer*), and the other illustrations (the cat, Ambers) come from their own authors. The GIFs were taken from third-party sources, are shipped here only as small decorative assets, and are **not** covered by this repository's license. The three pixel-art characters were reduced losslessly to their native size and the other GIFs were downscaled to keep the extension light. If you are a rights holder and want a GIF removed, or if you know the author of one of them and want it credited, please open an issue.
 
