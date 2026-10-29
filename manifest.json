@@ -8,7 +8,6 @@
     "include": [
         "https://raw.githubusercontent.com/NephVx2/Spicetify-tui/main/noControls.js",
         "https://raw.githubusercontent.com/NephVx2/Spicetify-tui/main/flatBackgrounds.js",
-        "https://raw.githubusercontent.com/NephVx2/Spicetify-tui/main/marketplaceTabs.js",
         "https://raw.githubusercontent.com/NephVx2/Spicetify-tui/main/draggablePets.js"
     ],
     "authors": [
